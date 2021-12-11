@@ -29,7 +29,7 @@ def user_login(request):
         
         if user is not None:
             login(request, user)
-            return redirect('User:register')
+            return redirect('ChartPlot:home')
         
         context['errorCredentials'] = 'Incorrect username or password. Please, try again.'
         

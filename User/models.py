@@ -1,7 +1,28 @@
 from django.contrib.auth.models import AbstractUser
+from django.db.models.query import QuerySet
+
+from ChartPlot.models import ChartPlot
+
 
 # Create your models here.
 class User(AbstractUser):
     
     def __str__(self) -> str:
         return self.username
+
+
+    def get_all_chartplot(self) -> QuerySet:
+        """ Returns the all chartplots of user. """
+        return self.chartplot_set.all()
+   
+    
+    def get_chartplot(self, id):
+        return self.chartplot_set.get(id=id)
+ 
+    
+    def set_chartplot(self, events):
+        ChartPlot.objects.create(
+            events = events,
+            user = self
+        )
+

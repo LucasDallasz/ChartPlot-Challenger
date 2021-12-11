@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>ChartPlot</h1>
+<p><a href="{% url 'ChartPlot:create' %}">Novo </a></p>
+{% if chartplots %}
+    <ul>    
+    {% for chartplot in chartplots %}
+        <li><a href="{% url 'ChartPlot:detail' chartplot.id %}">{{ chartplot|truncatechars:30 }}</a></li>    {% endfor %}
+    </ul>
+{% else %}
+    <p>Voce nao tem um chartplot.</p>
+{% endif %}
+
+{% endblock %}
