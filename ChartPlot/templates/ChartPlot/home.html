@@ -5,6 +5,21 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 {% block body %}
+{% if request.GET.newChartPlot == '1' %}
+<div class="alert alert-success" role="alert">
+    <b>ChartPlot created successfully!.</b>
+</div>
+{% endif %}
+{% if request.GET.invalidChartPlot == '1' %}
+<div class="alert alert-danger" role="alert">
+    <b>This ChartPlot does not belong to you.</b>
+</div>
+{% endif %}
+{% if request.GET.objectDoesNotExists == '1' %}
+<div class="alert alert-danger" role="alert">
+    <b>This ChartPlot does not exists.</b>
+</div>
+{% endif %}
 <div class="container">
 <h1 class="text-center p-5">All your charts.</h1>
 {% if chartplots %}

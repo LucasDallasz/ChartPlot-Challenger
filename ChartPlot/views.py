@@ -4,6 +4,8 @@ from django.urls import reverse
 from .forms import ChartPlotForm
 from .decorators import owner_required
 
+from Utils.decorators import object_exists
+
 
 # Create your views here.
 def chartplot_home(request):
@@ -16,11 +18,12 @@ def chartplot_create(request):
     
     if form.is_valid():
         request.user.set_chartplot(form.cleaned_data['name'], form.cleaned_data['entry']['events'])
-        return redirect('ChartPlot:home')
+        return redirect(f"{reverse('ChartPlot:home')}?newChartPlot=1")
         
     return render(request, 'ChartPlot/create.html', {'form': form})
 
 
+@object_exists('ChartPlot')
 @owner_required
 def chartplot_detail(request, id):
     chartplot = request.user.get_chartplot(id)
@@ -44,6 +47,7 @@ def chartplot_detail(request, id):
     return render(request, 'ChartPlot/detail.html', context)
 
 
+@object_exists('ChartPlot')
 @owner_required
 def chartplot_edit(request, id):
     chartplot = request.user.get_chartplot(id)
