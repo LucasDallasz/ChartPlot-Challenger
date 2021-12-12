@@ -1,0 +1,21 @@
+a { text-decoration: none }
+
+.errorlist {
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(245, 18, 18);
+    border-radius: 5px;
+}
+
+.successlist {
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+    background-color: rgb(3, 105, 42);
+    border-radius: 5px;
+}

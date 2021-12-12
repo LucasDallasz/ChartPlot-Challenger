@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block localCss %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+{% endblock %}
 
 {% block body %}
-<h1>ChartPlot Create</h1>
-
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="Create">
-</form>
-
-<p><a href="{% url 'ChartPlot:home' %}">Home</a></p>
+<div class="container">
+<h1 class="text-center p-4">ChartPlot Create</h1>
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.entry.errors }}
+        <label for="name"><b>ChartPlot Name</b></label>
+        {{ form.name }}
+        <label for="entry"><b>Events</b></label>
+        {{ form.entry }}
+        <br>
+        <button type="submit" class="btn btn-primary text-center">Generate</button>
+    </form>
+</div>
+</div>
 {% endblock %}

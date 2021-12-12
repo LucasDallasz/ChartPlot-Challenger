@@ -2,6 +2,7 @@ from django import forms
 
 from .models import ChartPlot
 from .validators import *
+from .functions import generateChartData
 
 import json5
 
@@ -18,17 +19,30 @@ class ChartPlotForm(forms.Form):
         'DataEntryIncorrect': 'Input data is invalid.',
         'RangeDaysIncorrect': 'Incorrect range of days. Check timestamp events.',
         'MinRangeDays': 'An interval of at least 2 days is required.',
-        'MinEventPerGroup': 'It is essential that every day have the same amount of events.'
+        'MinEventPerGroup': 'It is essential that every day have the same amount of events.',
+        'KeyError': 'There is an incorrect event key name. Please, check the events..',
     }
     
+    
+    name = forms.CharField(
+        label='Name',
+        max_length=1000,
+        widget=forms.TextInput(attrs={
+            'class': 'mb-2 form-control',
+        })
+    )
     
     entry = forms.CharField(
         label='',
         max_length=10000,
-        widget=forms.Textarea()
+        widget=forms.Textarea(attrs={
+            'id': 'entryEvents',
+            'class': 'md-textarea form-control mb-1',
+            'rows': 10, 'cols': 100,
+        })
     )
         
-        
+    
     def clean_entry(self):
         entry = self.cleaned_data['entry']
         entry_cleaned = self._cleanEntry(entry)
@@ -64,7 +78,12 @@ class ChartPlotForm(forms.Form):
         if not groupsAreValid:
             raise forms.ValidationError(self.error_messages['MinEventPerGroup'])
         
-        return {'groups': groups, 'labels': len(cleaned_timestamp), 'events': entry}
+        try:
+            chartData = generateChartData({'groups': groups, 'labels': len(cleaned_timestamp)})
+        except KeyError:
+            raise forms.ValidationError(self.error_messages['KeyError'])
+        
+        return {'chartData': chartData, 'events': entry}
         
 
     def _cleanEntry(self, entry) -> list or None:
@@ -87,7 +106,6 @@ class ChartPlotForm(forms.Form):
             Each day corresponds to a value of 6.000 added to the current timestamp. 
         """
         cleanedTimestamp = self._cleanTimestamp(allTimestamp)
-        print(cleanedTimestamp, '<<< ')
         
         for pos, timestamp in enumerate(cleanedTimestamp):
             if pos > 0:

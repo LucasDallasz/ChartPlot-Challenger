@@ -17,11 +17,17 @@ class User(AbstractUser):
    
     
     def get_chartplot(self, id):
-        return self.chartplot_set.get(id=id)
+        try:
+            chartplot = self.chartplot_set.get(id=id)
+        except Exception:
+            chartplot = None
+        finally:
+            return chartplot
  
     
-    def set_chartplot(self, events):
+    def set_chartplot(self, name, events):
         ChartPlot.objects.create(
+            name = name,
             events = events,
             user = self
         )

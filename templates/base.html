@@ -9,10 +9,41 @@
     {% block title %}<title>ChartPlot - Challenger</title>{% endblock %}
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'b_css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base1.css' %}">
     {% block localCss %} {% endblock %}
+    {% block head %} {% endblock %}
 </head>
 <body>
-{% block body %}
+{% block nav %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <!-- Container wrapper -->
+    <div class="container">
+      <!-- Navbar brand -->
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a id="ct" class="nav-link h3 text-white" href="{% url 'ChartPlot:home' %}">Lucas's Challenge</a>
+          </li>
+        </ul>
+        <!-- Left links -->
+        <div class="d-flex align-items-center">
+          <a href="{% url 'User:logout' %}">
+          <button type="button" class="btn btn-danger me-3">
+            Logout
+          </button>
+          </a>
+        </div>
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
 {% endblock %}
+{% block body %} {% endblock %}
 </body>
+{% block script %} {% endblock %}
 </html>

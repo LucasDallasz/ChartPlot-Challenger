@@ -1,25 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
+<link rel="stylesheet" href="{% static 'codemirror/lib/codemirror.css' %}">
+<script src="{% static 'codemirror/mode/javascript/javascript.js' %}"></script>
+<link rel="stylesheet" href="{% static 'codemirror/theme/dracula.css' %}">
+{% endblock %}
 
 {% block body %}
-<h1>ChartPlot Detail</h1>
+{% if request.GET.chartPlotUpdated == '1' %}
+<div class="alert alert-success" role="alert">
+    <b>ChartPlot successfully edited.</b>
+  </div>
+{% endif %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="Create">
-</form>
+<h1 class="text-center p-4">{{ form.name.value }}</h1>
 
-<h2>ChartGrapch</h2>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js" integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<div>
-    <canvas id="myChart" width="10" height="10"></canvas>
+<div style= "width:90%;" class="container">
+    <canvas id="myChart" width="700" height="200"></canvas>
 </div>
 
-<script>
+<p class="text-center"><a href="{% url 'ChartPlot:edit' chartplot.id %}"><button class="btn btn-success">Edit this chartplot</button></a></p>
 
+<script>
     const labels = {{ labels|safe }}
-    const values1 = {{ values|safe }}
+    const data = {{ values|safe }}
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
@@ -28,10 +36,12 @@
             datasets: [
                 {% for v in values %}
                 {
+                    label: '',
                     data: {{v}},
                     backgroundColor: ['rgba(255, 99, 132, 0.2)','rgba(54, 162, 235, 0.2)','rgba(255, 206, 86, 0.2)','rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)','rgba(255, 159, 64, 0.2)'],
                     borderColor: ['rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)'],
                     borderWidth: 1,
+                    fill: false,
                 },
                 {% endfor %}
             ]
@@ -46,5 +56,5 @@
     });
     </script>
 
-<p><a href="{% url 'ChartPlot:home' %}">Home</a></p>
 {% endblock %}
+

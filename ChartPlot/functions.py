@@ -1,4 +1,5 @@
 def generateChartData(groupsData) -> dict or None:
+    
     def generateData(groups) -> list or None:
         
         def getDataSet(event, groups) -> tuple or None:

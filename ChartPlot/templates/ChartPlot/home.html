@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block localCss %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 {% block body %}
-<h1>ChartPlot</h1>
-<p><a href="{% url 'ChartPlot:create' %}">Novo </a></p>
+<div class="container">
+<h1 class="text-center p-5">All your charts.</h1>
 {% if chartplots %}
+<p><a href="{% url 'ChartPlot:create' %}">Novo </a></p>
     <ul>    
     {% for chartplot in chartplots %}
-        <li><a href="{% url 'ChartPlot:detail' chartplot.id %}">{{ chartplot|truncatechars:30 }}</a></li>    {% endfor %}
+        <li><a href="{% url 'ChartPlot:detail' chartplot.id %}">{{ chartplot.name }}</a></li>    
+    {% endfor %}
     </ul>
 {% else %}
-    <p>Voce nao tem um chartplot.</p>
+    <div id="warning">
+        <p class="text-center p-5">You have no chart. <a href="{% url 'ChartPlot:create' %}">Create</a> one now!.</p>
+    </div>
 {% endif %}
-
+</div>
 {% endblock %}
