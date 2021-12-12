@@ -25,3 +25,14 @@ def checkSpan(jsonData, *args, **kwargs) -> bool:
     event_span = [x for x in jsonData if x['type'] == 'span'][0]
     begin, end = event_span['begin'], event_span['end']
     return begin <= end
+
+
+def checkStartEvent(jsonData, *args, **kwargs) -> bool:
+    firstEvent = jsonData[0]
+    return firstEvent['type'] == 'start'
+ 
+ 
+def checkStopEvent(jsonData, *args, **kwargs) -> bool:
+    firstEvent = jsonData[-1]
+    return firstEvent['type'] == 'stop'
+

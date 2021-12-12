@@ -12,6 +12,8 @@ class ChartPlotForm(forms.Form):
     validators = [
         {'func': checkTypes, 'errorMessage': 'There is an incorrect event type. Please, check all types.'},
         {'func': checkSpan, 'errorMessage': 'The span is incorrect. Please, check the timestamp.'},
+        {'func': checkStartEvent, 'errorMessage': 'Event start not found.'},
+        {'func': checkStopEvent, 'errorMessage': 'Event stop not found.'}
     ]
     
     
@@ -21,7 +23,7 @@ class ChartPlotForm(forms.Form):
         'MinRangeDays': 'An interval of at least 2 days is required.',
         'MinEventPerGroup': 'It is essential that every day have the same amount of events.',
         'KeyError': 'There is an incorrect event key name. Please, check the events.',
-        'NameGroupInvalid': 'There is an incorrect group name. Check the events.', 
+        'NameGroupInvalid': 'There is an incorrect group name. Check the events.',
     }
     
     

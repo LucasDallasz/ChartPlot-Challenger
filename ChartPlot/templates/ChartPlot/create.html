@@ -17,7 +17,10 @@
         <label for="entry"><b>Events</b></label>
         {{ form.entry }}
         <br>
-        <button type="submit" class="btn btn-primary text-center">Generate</button>
+        <button type="submit" class="btn btn-primary">Generate</button>
+        {% if form.errors %}
+        <a class="btn btn-warning" href="{% url 'ChartPlot:tutorial' %}">How to create a ChartPlot</a>
+        {% endif %}
     </form>
 </div>
 </div>

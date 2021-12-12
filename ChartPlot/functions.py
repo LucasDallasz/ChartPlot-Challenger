@@ -38,3 +38,27 @@ def generateChartData(groupsData) -> dict or None:
     
     return None
         
+        
+def setColorByGroup(values):
+    result = []
+    colors = [
+        {'bg': 'rgba(255, 99, 132, 0.2)', 'border': 'rgba(255, 99, 132, 1)'},
+        {'bg': 'rgba(54, 162, 235, 0.2)', 'border': 'rgba(54, 162, 235, 1)'},
+        {'bg': 'rgba(255, 206, 86, 0.2)', 'border': 'rgba(255, 206, 86, 1)'},
+        {'bg': 'rgba(75, 192, 192, 0.2)', 'border': 'rgba(75, 192, 192, 1)'},
+        {'bg': 'rgba(153, 102, 255, 0.2)', 'border': 'rgba(153, 102, 255, 1)'},
+        {'bg': 'rgba(255, 159, 64, 0.2)', 'border': 'rgba(255, 159, 64, 1)'},
+        {'bg': 'rgb(7, 107, 0, 0.2)', 'border': 'rgb(7, 107, 0, 1)'},
+        {'bg': 'rgb(255, 0, 1, 0.2)', 'border': ' rgb(255, 0, 1, 1)'},
+    ]
+    
+    pos = 0
+    for value in values:
+        if pos >= len(colors): 
+            pos = 0
+        color = colors[pos]
+        result.append({'data': value, 'bg': color['bg'], 'border': color['border']})
+        pos+= 1
+        
+    return result
+            

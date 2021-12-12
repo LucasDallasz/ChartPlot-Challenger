@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import ChartPlotForm
+from .functions import setColorByGroup
 from .decorators import owner_required
 
 from Utils.decorators import object_exists
@@ -27,9 +28,8 @@ def chartplot_create(request):
 @owner_required
 def chartplot_detail(request, id):
     chartplot = request.user.get_chartplot(id)
-    form = ChartPlotForm(
-        {'name': chartplot.__str__(), 'entry': chartplot.events}
-    )
+    form = ChartPlotForm({'name': chartplot.__str__(), 'entry': chartplot.events})
+    
     context = {'form': form, 'chartplot': chartplot}
     
     if form.is_valid():
@@ -41,8 +41,10 @@ def chartplot_detail(request, id):
             values.append(v[0])
             values.append(v[1])
             
+        groups = setColorByGroup(values)
+            
         context['labels'] = chartData['labels']
-        context['values'] = values
+        context['values'] = groups
     
     return render(request, 'ChartPlot/detail.html', context)
 
@@ -71,4 +73,8 @@ def chartplot_edit(request, id):
     
     context = {'form': form, 'chartplot': chartplot}
     return render(request, 'ChartPlot/edit.html', context)
+
+
+def chartplot_tutorial(request):
+    return render(request, 'ChartPlot/tutorial.html')
 
