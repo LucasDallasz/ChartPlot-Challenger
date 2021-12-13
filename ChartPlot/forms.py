@@ -12,6 +12,8 @@ class ChartPlotForm(forms.Form):
     validators = [
         {'func': checkTypes, 'errorMessage': 'There is an incorrect event type. Please, check all types.'},
         {'func': checkSpan, 'errorMessage': 'The span is incorrect. Please, check the timestamp.'},
+        {'func': checkStartEvent, 'errorMessage': 'Event start not found.'},
+        {'func': checkStopEvent, 'errorMessage': 'Event stop not found.'}
     ]
     
     
@@ -20,7 +22,8 @@ class ChartPlotForm(forms.Form):
         'RangeDaysIncorrect': 'Incorrect range of days. Check timestamp events.',
         'MinRangeDays': 'An interval of at least 2 days is required.',
         'MinEventPerGroup': 'It is essential that every day have the same amount of events.',
-        'KeyError': 'There is an incorrect event key name. Please, check the events..',
+        'KeyError': 'There is an incorrect event key name. Please, check the events.',
+        'NameGroupInvalid': 'There is an incorrect group name. Check the events.',
     }
     
     
@@ -41,7 +44,7 @@ class ChartPlotForm(forms.Form):
             'rows': 10, 'cols': 100,
         })
     )
-        
+    
     
     def clean_entry(self):
         entry = self.cleaned_data['entry']
@@ -56,13 +59,14 @@ class ChartPlotForm(forms.Form):
         
         eventsData = list(filter(lambda x: x['type'] == 'data', entry_cleaned))
         allTimestamp = [{'timestamp': x['timestamp']} for x in eventsData]
-        
+
+        """ Checking if the timestamp range is valid. """
         if not self._validateAllTimestamp(allTimestamp):
-            """ Checking if the timestamp range is valid. """
             raise forms.ValidationError(self.error_messages['RangeDaysIncorrect'])
         
         cleaned_timestamp = self._cleanTimestamp(allTimestamp)
         
+        """ Check that the events are at least 2 days apart. """
         if len(cleaned_timestamp) <= 1:
             raise forms.ValidationError(self.error_messages['MinRangeDays'])
         
@@ -75,13 +79,19 @@ class ChartPlotForm(forms.Form):
         """ If all groups have the requested amount, returns true. """
         groupsAreValid = self._checkAmountPerGroup(groups, amountRequiredByGroup)
 
+        """ This line checks whether the groups are valid. """
         if not groupsAreValid:
             raise forms.ValidationError(self.error_messages['MinEventPerGroup'])
         
+        """Checking that all key names are valid."""
         try:
             chartData = generateChartData({'groups': groups, 'labels': len(cleaned_timestamp)})
         except KeyError:
             raise forms.ValidationError(self.error_messages['KeyError'])
+        
+        """ This line checks if the group names are valid. For example, 'linus' is an invalid name. """
+        if not chartData:
+            raise forms.ValidationError(self.error_messages['NameGroupInvalid'])
         
         return {'chartData': chartData, 'events': entry}
         
@@ -114,7 +124,11 @@ class ChartPlotForm(forms.Form):
         return True 
     
     
-    def _generateGroups(self, allTimestamp, eventsData):
+    def _generateGroups(self, allTimestamp, eventsData) -> list:
+        """ 
+            This method separates the events of each day.
+            Examples: [ {'1519862400000': [event1, event2...]}, {'1519862460000': [event1, event2...]} ] 
+        """
         groups = {x: [] for x in allTimestamp}
         for event in eventsData:
             groups[event['timestamp']].append(event)
@@ -122,12 +136,14 @@ class ChartPlotForm(forms.Form):
 
     
     def _amountRequired(self, jsonData, eventsData) -> int:
+        """ This method checks the minimum number of events per day. Based on the first day. """
         eventStart = jsonData[1]
         begin = eventStart['begin']
         return len(list(filter(lambda x: x['timestamp'] == begin, eventsData)))
     
     
-    def _checkAmountPerGroup(self, groups, amountRequired):
+    def _checkAmountPerGroup(self, groups, amountRequired) -> bool:
+        """ This method checks if the number of events of the day is valid. """
         for _, value in groups.items():
             amount_group = len(value)
             if amount_group != amountRequired:

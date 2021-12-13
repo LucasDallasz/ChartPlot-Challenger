@@ -18,7 +18,7 @@ def object_exists(modelName):
             try:
                 (Model.objects.get(id=id)) is True
             except ObjectDoesNotExist:
-                return redirect(f"{reverse('Chart:all')}?objectDoesNotExists=1")
+                return redirect(f"{reverse('ChartPlot:home')}?objectDoesNotExists=1")
             else:
                 return view(request, id, *args, **kwargs)
         return wrapper

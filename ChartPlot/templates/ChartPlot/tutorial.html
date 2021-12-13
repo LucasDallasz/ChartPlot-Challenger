@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center p-4">How to create a ChartPlot</h1>
+    <h2 class="mt-2">Body</h2>
+    <p>The body of a ChartPlot is made up of types.</p>
+    <p class="pt-2"><b>start: </b>This event is responsible for initializing the chart with fields. <br><code class="text-muted">{type: "start", timestamp: 1519862400000, select: ["min_response_time", "max_response_time"], group: ["os", "browser"]}</code></p>
+    <p class="pt-2"><b>span: </b>This event is responsible for defining the period of events. <br><code class="text-muted">{type: "span", timestamp: 1519862400000, begin: 1519862400000, "end": 1519862460000}</code></p>
+    <p class="pt-2"><b>data: </b>This event is responsible for defining the values ​​to be displayed in the chart. <br><code class="text-muted">{type: "data", timestamp: 1519862400000, os: "linux", browser: "chrome", min_response_time: 0.1, max_response_time: 1.3}</code></p>
+    <p class="pt-2"><b>stop: </b>This event is responsible for finalizing data entry. <br><code class="text-muted">{type: "stop", timestamp: 1519862460000}</code></p>
+    <h2 class="pt-5">Structure</h2>
+    <p>
+        Events must be configured correctly for the Chart to work.<br>
+        Like the span event, the 'begin' value must be less than the 'end' value and must also have an interval of 1 day.
+        As well as 'date' type events. The number of events for each day is based on the number of the first.
+    </p>
+    <h2 class="pt-5">Example</h2>
+    <p>
+        <code class="text-muted">
+            {type: "start", timestamp: 1519862400000, select: ["min_response_time", "max_response_time"], group: ["os", "browser"]}<br>
+            {type: "span", timestamp: 1519862400000, begin: 1519862400000, "end": 1519862460000}<br>
+            {type: "data", timestamp: 1519862400000, os: "linux", browser: "chrome", min_response_time: 0.1, max_response_time: 1.3}<br>
+            {type: "data", timestamp: 1519862400000, os: "mac", browser: "chrome", min_response_time: 0.2, max_response_time: 1.2}<br>
+            {type: "data", timestamp: 1519862400000, os: "mac", browser: "firefox", min_response_time: 0.3, max_response_time: 1.2}<br>
+            {type: "data", timestamp: 1519862400000, os: "linux", browser: "firefox", min_response_time: 0.1, max_response_time: 1.0}<br>
+            {type: "data", timestamp: 1519862460000, os: "linux", browser: "chrome", min_response_time: 0.2, max_response_time: 0.9}<br>
+            {type: "data", timestamp: 1519862460000, os: "mac", browser: "chrome", min_response_time: 0.1, max_response_time: 1.0}<br>
+            {type: "data", timestamp: 1519862460000, os: "mac", browser: "firefox", min_response_time: 0.2, max_response_time: 1.1}<br>
+            {type: "data", timestamp: 1519862460000, os: "linux", browser: "firefox", min_response_time: 0.3, max_response_time: 1.4}<br>
+            {type: "stop", timestamp: 1519862460000}<br>
+        </code>
+    </p>
+    <p class="text-center"><a class="btn btn-success" href="{% url 'ChartPlot:create' %}">Create a ChartPlot</a></p>
+</div>
+{% endblock %}
