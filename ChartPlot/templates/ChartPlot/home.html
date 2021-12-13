@@ -23,12 +23,29 @@
 <div class="container">
 <h1 class="text-center p-5">All your charts.</h1>
 {% if chartplots %}
-<p><a href="{% url 'ChartPlot:create' %}">Novo </a></p>
-    <ul>    
-    {% for chartplot in chartplots %}
-        <li><a href="{% url 'ChartPlot:detail' chartplot.id %}">{{ chartplot.name }}</a></li>    
-    {% endfor %}
-    </ul>
+<table class="table table-hover">
+      <a href="{% url 'ChartPlot:create' %}"><button class="btn btn-success mb-1">New ChartPlot</button></a>
+
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for chart in chartplots %}
+        <tr>
+          <th scope="row">{{ chart.id }}</th>
+          <td>{{ chart.name }}</td>
+          <td>
+              <a href="#" class="option"><img src="{% static 'img/info.png' %}"></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% else %}
     <div id="warning">
         <p class="text-center p-5">You have no chart. <a href="{% url 'ChartPlot:create' %}">Create</a> one now!.</p>
