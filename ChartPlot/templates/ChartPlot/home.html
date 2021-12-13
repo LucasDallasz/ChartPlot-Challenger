@@ -39,8 +39,9 @@
         <tr>
           <th scope="row">{{ chart.id }}</th>
           <td>{{ chart.name }}</td>
+          <td>{{ chart.date_created }}</td>
           <td>
-              <a href="#" class="option"><img src="{% static 'img/info.png' %}"></a>
+              <a href="{% url 'ChartPlot:detail' chart.id %}" class="option"><img src="{% static 'img/info.png' %}"></a>
           </td>
         </tr>
         {% endfor %}
