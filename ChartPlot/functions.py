@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def generateChartData(groupsData) -> dict or None:
     """ This function separates the values ​​for each day. If a key error occurs, it will return false. """
     
@@ -39,7 +41,7 @@ def generateChartData(groupsData) -> dict or None:
     return None
         
         
-def setColorByGroup(values):
+def setColorByGroup(values) -> list:
     result = []
     colors = [
         {'bg': 'rgba(255, 99, 132, 0.2)', 'border': 'rgba(255, 99, 132, 1)'},

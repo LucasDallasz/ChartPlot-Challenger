@@ -7,7 +7,12 @@
 {% block body %}
 {% if request.GET.newChartPlot == '1' %}
 <div class="alert alert-success" role="alert">
-    <b>ChartPlot created successfully!.</b>
+    <b>ChartPlot created successfully.</b>
+</div>
+{% endif %}
+{% if request.GET.chartPlotDeleted == '1' %}
+<div class="alert alert-success" role="alert">
+    <b>ChartPlot deleted successfully.</b>
 </div>
 {% endif %}
 {% if request.GET.invalidChartPlot == '1' %}

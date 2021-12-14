@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     chartplot_create,
     chartplot_detail,
+    chartplot_delete,
     chartplot_edit,
     chartplot_home,
     chartplot_tutorial, 
@@ -15,4 +16,5 @@ urlpatterns = [
     path('tutorial/', chartplot_tutorial, name='tutorial'),
     path('<id>/detail/', chartplot_detail, name='detail'),
     path('<id>/edit/', chartplot_edit, name='edit'),
+    path('<id>/delete/', chartplot_delete, name='delete'),
 ]

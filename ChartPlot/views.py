@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from .decorators import owner_required
 from .forms import ChartPlotForm
 from .functions import setColorByGroup
-from .decorators import owner_required
 
 from Utils.decorators import object_exists
 
@@ -26,6 +26,14 @@ def chartplot_create(request):
 
 @object_exists('ChartPlot')
 @owner_required
+def chartplot_delete(request, id):
+    request.user.delete_chartplot(id)
+    return redirect(f"{reverse('ChartPlot:home')}?chartPlotDeleted=1")
+    
+
+
+@object_exists('ChartPlot')
+@owner_required
 def chartplot_detail(request, id):
     chartplot = request.user.get_chartplot(id)
     form = ChartPlotForm({'name': chartplot.__str__(), 'entry': chartplot.events})
@@ -42,7 +50,6 @@ def chartplot_detail(request, id):
             values.append(v[1])
             
         groups = setColorByGroup(values)
-            
         context['labels'] = chartData['labels']
         context['values'] = groups
     

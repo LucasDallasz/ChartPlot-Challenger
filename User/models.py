@@ -32,3 +32,8 @@ class User(AbstractUser):
             user = self
         )
 
+
+    def delete_chartplot(self, id):
+        chartplot = self.get_chartplot(id)
+        chartplot.delete()
+        
