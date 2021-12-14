@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!lerkkxi_lz8@-y=lt(-b37+)(*g034c*gww18&z@g9a87yud%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["https://chartplot-challenger.herokuapp.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
