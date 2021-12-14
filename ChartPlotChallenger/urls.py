@@ -21,3 +21,6 @@ urlpatterns = [
     path('', include('User.urls')),
     path('chart-plot/', include('ChartPlot.urls')),
 ]
+
+
+handler404 = 'Utils.views.handler_404'

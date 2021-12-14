@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>404 - Page Not Found</title> {% endblock %}
+
+{% block nav %} {% endblock %}
+{% block body %}
+<div class="container">
+<h1 class="text-center p-4">Page not found.</h1>
+{% if request.user.is_authenticated %}
+    <p class="text-center"><a class="btn btn-success m-2" href="{% url 'ChartPlot:home' %}">Home Page</a></p>
+{% else %}
+    <p class="text-center"><a class="btn btn-success m-2" href="{% url 'User:login' %}">Login</a></p>
+{% endif %}
+</div>
+{% endblock %}
