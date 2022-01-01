@@ -1,6 +1,5 @@
 from django import forms
 
-from .models import ChartPlot
 from .validators import *
 from .functions import generateChartData
 

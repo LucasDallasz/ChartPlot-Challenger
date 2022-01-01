@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Utils',
     'User',
     'ChartPlot',
+    'RequestLimiter',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Utils.middleware.LoginRequiredMiddleware',
+    'RequestLimiter.middleware.RequestLimiterMiddleware',
 ]
 
 ROOT_URLCONF = 'ChartPlotChallenger.urls'
@@ -113,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
