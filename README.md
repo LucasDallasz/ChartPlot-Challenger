@@ -1,5 +1,5 @@
-<h1> ChartPlot Challenger <h2>
-<h2>About the challenger </h2>
+<h1> ChartPlot Challenge <h2>
+<h2>About the challenge </h2>
 <li>You can create, edit and delete multiple chartplot.</li>
 <li>The challenge has numerous security systems that limit the user only to their content.</li>
 <li>There is a middleware that limits requests, avoiding bottlenecks.</li>
