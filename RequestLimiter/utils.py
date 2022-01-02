@@ -9,7 +9,7 @@ def date_time_now() -> object:
 
 
 def str_to_datetime(string) -> object:
-    
+    # Example input value 2021-12-31 23:55:51
     
     def datetime_to_list(string) -> list:
         return string.split(' ')
