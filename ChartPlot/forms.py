@@ -70,7 +70,7 @@ class ChartPlotForm(forms.Form):
             raise forms.ValidationError(self.error_messages['MinRangeDays'])
         
         """ Here are the groups. Each group is a day and each day contains its events. """
-        groups = self._generateGroups(cleaned_timestamp, eventsData)
+        groups = self._generateGroups(cleaned_timestamp, eventsData) #  > [1519862400000: [event1, event2], 1519862460000: [event1, event2]] < #
         
         """ Here is the amount needed for each group. """
         amountRequiredByGroup = self._amountRequired(entry_cleaned, eventsData)
@@ -94,7 +94,9 @@ class ChartPlotForm(forms.Form):
         
         return {'chartData': chartData, 'events': entry}
         
-
+        
+    ## METHODS ## 
+    
     def _cleanEntry(self, entry) -> list or None:
         result, objects = [], entry.split('\n')
         for obj in objects:
@@ -114,8 +116,8 @@ class ChartPlotForm(forms.Form):
             Checks if the days based on the timestamp are valid.
             Each day corresponds to a value of 6.000 added to the current timestamp. 
         """
-        cleanedTimestamp = self._cleanTimestamp(allTimestamp)
-        
+        cleanedTimestamp = self._cleanTimestamp(allTimestamp) # > [1519862400000, 1519862460000] < #
+    
         for pos, timestamp in enumerate(cleanedTimestamp):
             if pos > 0:
                 if (timestamp - cleanedTimestamp[pos - 1]) != 60000:
@@ -143,7 +145,7 @@ class ChartPlotForm(forms.Form):
     
     def _checkAmountPerGroup(self, groups, amountRequired) -> bool:
         """ This method checks if the number of events of the day is valid. """
-        for _, value in groups.items():
+        for _, value in groups.items(): 
             amount_group = len(value)
             if amount_group != amountRequired:
                 return False

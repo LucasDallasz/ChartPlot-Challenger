@@ -1,5 +1,3 @@
-from datetime import datetime
-
 def generateChartData(groupsData) -> dict or None:
     """ This function separates the values ​​for each day. If a key error occurs, it will return false. """
     
@@ -30,6 +28,16 @@ def generateChartData(groupsData) -> dict or None:
             if data is None:
                 return None
             result.append(data)  
+        
+        
+        """
+        The algorithm organizes the data like this:
+        
+            [[0.1, 0.2], [1.3, 0.9]]
+            [[0.2, 0.1], [1.2, 1.0]]
+            [[0.3, 0.2], [1.2, 1.1]]
+            [[0.1, 0.3], [1.0, 1.4]]    
+        """
         
         return result
         
